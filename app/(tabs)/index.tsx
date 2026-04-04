@@ -65,6 +65,15 @@ export default function HomeScreen() {
         </ThemedText>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
+        <ThemedText type="subtitle">TV5: Chức năng của bạn</ThemedText>
+        <Link href={"/survey" as any} style={styles.surveyButton}>
+          <ThemedText style={styles.surveyButtonText}>Bắt đầu khảo sát sở thích</ThemedText>
+        </Link>
+        <ThemedText>
+          Trải nghiệm trang "Khảo sát sở thích" để hệ thống gợi ý ăn uống thông minh.
+        </ThemedText>
+      </ThemedView>
+      <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
         <ThemedText>
           {`When you're ready, run `}
@@ -95,4 +104,18 @@ const styles = StyleSheet.create({
     left: 0,
     position: 'absolute',
   },
+  surveyButton: {
+    backgroundColor: '#ff6b6b',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginVertical: 4,
+    display: 'flex',
+    justifyContent: 'center'
+  },
+  surveyButtonText: {
+    color: '#ffffff',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  }
 });
