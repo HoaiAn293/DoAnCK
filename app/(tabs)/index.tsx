@@ -37,6 +37,17 @@ export default function HomeScreen() {
         </ThemedText>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
+        <ThemedText type="subtitle">Cần gợi ý món ăn?</ThemedText>
+        <ThemedText>
+          Bạn đang phân vân không biết ăn gì? Hãy thử ngay công cụ{' '}
+          <Link href="/spinner">
+            <ThemedText type="defaultSemiBold" style={{color: '#FF6F61'}}>Vòng quay món ăn</ThemedText>
+          </Link>{' '}
+          để xem tâm trạng hôm nay của bạn phù hợp với món gì nhé!
+        </ThemedText>
+      </ThemedView>
+
+      <ThemedView style={styles.stepContainer}>
         <Link href="/modal">
           <Link.Trigger>
             <ThemedText type="subtitle">Step 2: Explore</ThemedText>
