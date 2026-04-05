@@ -68,7 +68,7 @@ const LoginScreen: React.FC = () => {
             <View style={styles.illustrationWrapper}>
               <View style={styles.circleBg} />
               <Image
-                source={require("./assets/cute-rice-bowl.png")} // Sử dụng cùng file ảnh với Onboarding
+                source={require('../assets/images/icon.png')}
                 style={styles.image}
                 contentFit="contain"
               />

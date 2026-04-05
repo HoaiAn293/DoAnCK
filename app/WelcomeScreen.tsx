@@ -66,7 +66,7 @@ const WelcomeScreen: React.FC = () => {
         <View style={styles.circleBackground} />
         <Animated.View style={animatedIllustrationStyle}>
           <Image
-            source={require('./assets/cute-rice-bowl.png')} // Đảm bảo bạn có file này trong thư mục assets
+            source={require('../assets/images/icon.png')} // Đường dẫn đúng từ thư mục app/ ra ngoài
             style={styles.image}
             contentFit="contain"
           />

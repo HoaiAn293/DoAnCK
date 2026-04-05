@@ -1,31 +1,48 @@
 version: '3.8'
 
+# Quy trình cấu hình đồng thời các dịch vụ (Services)
 services:
+  # --- Dịch vụ 1: Database MongoDB ---
+  # Tải trực tiếp image từ Docker Hub (Registry Public)
   mongodb:
     image: mongo:latest
+    container_name: doanck-db
     ports:
-      - "27017:27017"
+      - "27017:27017" # Mở cổng 27017 cho các truy vấn DB
     volumes:
+      # Sử dụng Volume để lưu trữ dữ liệu bền vững (không mất khi tắt container)
       - mongo-data:/data/db
 
+  # --- Dịch vụ 2: Backend Node.js (API Express) ---
   backend:
-    build: ./backend
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: doanck-be-node
+    image: trinhkiendat/doanck-be:latest # Đặt tên và tag để đẩy lên Docker Hub
     ports:
-      - "5000:5000"
+      - "5000:5000" # Mở cổng 5000 cho các sinh viên truy cập API
     environment:
+      # Thiết lập các biến môi trường cấu hình hệ thống
       - PORT=5000
-      - MONGODB_URI=mongodb://mongodb:27017/doanck
-      - JWT_SECRET=your_jwt_secret_here
+      - MONGODB_URI=mongodb://mongodb:27017/doanck # Kết nối DB nội bộ
+      - JWT_SECRET=your_jwt_secret_here # Bảo mật Token
       - NODE_ENV=production
     depends_on:
-      - mongodb
+      - mongodb # Chờ DB sẵn sàng rồi mới chạy App
 
+  # --- Dịch vụ 3: Frontend Expo Web (Client UI) ---
   frontend:
-    build: .
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: doanck-fe-expo
+    image: trinhkiendat/doanck-fe:latest # Đặt tên và tag để đẩy lên Docker Hub
     ports:
-      - "8080:80"
+      - "8080:80" # Mở cổng 8080 cho sinh viên vào trang chủ
     depends_on:
-      - backend
+      - backend # Chờ Backend API sẵn sàng
 
+# Khai báo volume dùng chung để lưu trữ dữ liệu MongoDB
 volumes:
   mongo-data:
