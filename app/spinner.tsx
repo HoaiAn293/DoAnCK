@@ -8,11 +8,11 @@ import { LinearGradient } from 'expo-linear-gradient'; // Ensure this is install
 const { width } = Dimensions.get('window');
 
 const MOODS = [
-  { id: '1', label: 'Hào hứng', icon: 'emoticon-excited-outline' as any, color: '#FFD700', foods: ['Pizza Hải Sản', 'Lẩu Thái Cay', 'Bò Bít Tết'] },
-  { id: '2', label: 'Buồn bã', icon: 'emoticon-sad-outline' as any, color: '#6A5ACD', foods: ['Kem Chocolate', 'Bánh Gấu', 'Trà Sữa Khoai Môn'] },
-  { id: '3', label: 'Mệt mỏi', icon: 'emoticon-confused-outline' as any, color: '#4682B4', foods: ['Cháo Gà Bổ Dưỡng', 'Súp Cua', 'Yến Chưng'] },
-  { id: '4', label: 'Chill', icon: 'emoticon-cool-outline' as any, color: '#20B2AA', foods: ['Cà Phê Muối', 'Bánh Croissant', 'Sinh Tố Trái Cây'] },
-  { id: '5', label: 'Nổi loạn', icon: 'emoticon-dead-outline' as any, color: '#FF4500', foods: ['Mì Cay Cấp Độ 7', 'Gà Rán Sốt Cay', 'Bún Đậu Mắm Tôm'] },
+  { id: '1', label: 'Hào hứng', icon: 'emoticon-excited-outline' as any, color: '#FFD700', foods: ['Pizza Hải Sản', 'Lẩu Thái Cay', 'Bò Bít Tết', 'Tôm nướng muối ớt'] },
+  { id: '2', label: 'Buồn bã', icon: 'emoticon-sad-outline' as any, color: '#6A5ACD', foods: ['Kem Chocolate', 'Bánh Gấu', 'Trà Sữa Khoai Môn', 'Banh tráng nướng'] },
+  { id: '3', label: 'Mệt mỏi', icon: 'emoticon-confused-outline' as any, color: '#4682B4', foods: ['Cháo Gà Bổ Dưỡng', 'Súp Cua', 'Yến Chưng', 'Phở bò Hà Nội'] },
+  { id: '4', label: 'Chill', icon: 'emoticon-cool-outline' as any, color: '#20B2AA', foods: ['Cà Phê Muối', 'Bánh Croissant', 'Sinh Tố Trái Cây', 'Bánh mì Oanh'] },
+  { id: '5', label: 'Nổi loạn', icon: 'emoticon-dead-outline' as any, color: '#FF4500', foods: ['Mì Cay Cấp Độ 7', 'Gà Rán Sốt Cay', 'Bún Đậu Mắm Tôm', 'Ốc luộc mắm gừng'] },
 ];
 
 const SpinnerScreen = () => {
