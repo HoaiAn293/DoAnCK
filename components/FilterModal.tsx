@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import { IconSymbol } from '@/components/ui/icon-symbol';
+import { Colors } from '@/constants/theme';
+import { useColorScheme } from '@/hooks/use-color-scheme';
+import api from '@/services/api';
+import React, { useEffect, useState } from 'react';
 import {
+  ActivityIndicator,
+  FlatList,
   Modal,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  FlatList,
-  ActivityIndicator,
 } from 'react-native';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
-import api from '@/services/api';
 
 interface FilterModalProps {
   visible: boolean;
@@ -83,7 +83,7 @@ export function FilterModal({
           </View>
 
           <Text style={[styles.infoText, { color: colors.text }]}>
-            What's in your fridge? Select ingredients to find matching recipes.
+            What in your fridge? Select ingredients to find matching recipes.
           </Text>
 
           {loading ? (
