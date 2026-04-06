@@ -16,7 +16,7 @@ export default function ProfileScreen() {
   const { user, signOut, updateUser } = useAuth();
   const router = useRouter();
   const [isEditing, setIsEditing] = useState(false);
-  const [displayName, setDisplayName] = useState(user?.displayName || '');
+  const [displayName, setDisplayName] = useState(user?.name || '');
   const [saving, setSaving] = useState(false);
 
   const handleSave = async () => {
@@ -27,7 +27,7 @@ export default function ProfileScreen() {
 
     try {
       setSaving(true);
-      await updateUser({ ...user, displayName: displayName.trim() });
+      await updateUser({ ...user, name: displayName.trim() });
       setIsEditing(false);
       Alert.alert('Thành công', 'Cập nhật thông tin thành công!');
     } catch (error) {
@@ -83,7 +83,7 @@ export default function ProfileScreen() {
           <View style={styles.avatarContainer}>
             <View style={styles.avatar}>
               <Text style={styles.avatarText}>
-                {user?.displayName?.charAt(0)?.toUpperCase() || 'U'}
+                {(user?.name ?? 'U').charAt(0).toUpperCase()}
               </Text>
             </View>
             {!isEditing && (
@@ -114,11 +114,11 @@ export default function ProfileScreen() {
             </View>
           ) : (
             <View style={styles.userInfo}>
-              <Text style={styles.userName}>{user?.displayName || 'Khách'}</Text>
+              <Text style={styles.userName}>{user?.name || 'Khách'}</Text>
               <Text style={styles.userEmail}>{user?.email}</Text>
               <View style={styles.providerBadge}>
                 <Text style={styles.providerText}>
-                  {user?.provider === 'google' ? 'Google' : 'Email'}
+                  {user?.role === 'admin' ? 'Admin' : 'Khách hàng'}
                 </Text>
               </View>
             </View>

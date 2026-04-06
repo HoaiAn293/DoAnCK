@@ -1,14 +1,13 @@
+import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  SafeAreaView,
   Dimensions,
-  ActivityIndicator,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
-import { useRouter } from 'expo-router';
 import { useAuth } from '../context/AuthContext';
 
 const { width } = Dimensions.get('window');
@@ -19,35 +18,33 @@ export default function OnboardingScreen() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const handleGoogleLogin = async () => {
-    try {
-      setError('');
-      setLoading(true);
-      const mockGoogleToken = btoa(
-        JSON.stringify({
-          email: 'demo@gmail.com',
-          name: 'Demo User',
-          picture: null,
-        })
-      );
-      await signInWithGoogle(mockGoogleToken + '.' + mockGoogleToken + '.sig');
-      router.replace('/(tabs)');
-    } catch (err) {
-      setError(err.message || 'Đăng nhập thất bại');
-      setLoading(false);
-    }
-  };
+  // const handleGoogleLogin = async () => {
+  //   try {
+  //     setError('');
+  //     setLoading(true);
+  //     const mockGoogleToken = btoa(
+  //       JSON.stringify({
+  //         email: 'demo@gmail.com',
+  //         name: 'Demo User',
+  //         picture: null,
+  //       })
+  //     );
+  //     await signInWithGoogle(mockGoogleToken + '.' + mockGoogleToken + '.sig');
+  //     router.replace('/(tabs)');
+  //   } catch (err) {
+  //     setError(err.message || 'Đăng nhập thất bại');
+  //     setLoading(false);
+  //   }
+  // };
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
-        {/* Author credit */}
-        <Text style={styles.author}>Nguyễn Thành Đạt</Text>
 
         {/* Illustration */}
         <View style={styles.illustrationContainer}>
           <View style={styles.illustration}>
-            <Text style={styles.illustrationEmoji}>🍚</Text>
+            <Text style={styles.illustrationEmoji}></Text>
           </View>
         </View>
 
@@ -65,23 +62,7 @@ export default function OnboardingScreen() {
         ) : null}
 
         {/* Google Login Button */}
-        <TouchableOpacity
-          style={[styles.googleButton, loading && styles.buttonDisabled]}
-          onPress={handleGoogleLogin}
-          disabled={loading}
-          activeOpacity={0.8}
-        >
-          {loading ? (
-            <ActivityIndicator color="#FFFFFF" />
-          ) : (
-            <>
-              <View style={styles.googleIconContainer}>
-                <Text style={styles.googleIcon}>G</Text>
-              </View>
-              <Text style={styles.googleButtonText}>Đăng nhập với Google</Text>
-            </>
-          )}
-        </TouchableOpacity>
+
 
         {/* Skip / Continue with email */}
         <TouchableOpacity

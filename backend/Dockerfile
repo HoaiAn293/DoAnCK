@@ -1,19 +1,18 @@
-# Backend Dockerfile
-FROM --platform=linux/amd64 node:20-alpine
+# Use Node.js LTS version
+FROM node:20-alpine
 
-WORKDIR /app
+# Create app directory
+WORKDIR /usr/src/app
 
-# Copy package files
+# Install app dependencies
 COPY package*.json ./
+RUN npm install
 
-# Install dependencies
-RUN npm ci --only=production
+# Bundle app source
+COPY . .
 
-# Copy source code
-COPY src/ ./
+# Expose the API port
+EXPOSE 5000
 
-# Expose port
-EXPOSE 3000
-
-# Run the app
-CMD ["node", "src/index.js"]
+# Start the application
+CMD [ "npm", "start" ]

@@ -1,17 +1,18 @@
+import { Image } from 'expo-image';
+import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
-  View,
+  KeyboardAvoidingView,
+  Platform,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  StyleSheet,
-  SafeAreaView,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
+  View,
 } from 'react-native';
 import { useAuth } from '../context/AuthContext';
-import { useRouter } from 'expo-router';
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -27,10 +28,13 @@ export default function LoginScreen() {
   const [nameError, setNameError] = useState('');
   const [generalError, setGeneralError] = useState('');
 
-  const { signIn, signUp, signInWithGoogle } = useAuth();
+  const { signIn, signUp, signInWithGoogle, user } = useAuth();
+
+  // Get admin check — derived from current user state
+  const isAdmin = user?.role === 'admin';
 
   // Validation functions
-  const validateEmail = (email) => {
+  const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email) {
       return 'Email là bắt buộc';
@@ -41,7 +45,7 @@ export default function LoginScreen() {
     return '';
   };
 
-  const validatePassword = (password) => {
+  const validatePassword = (password: string) => {
     if (!password) {
       return 'Mật khẩu là bắt buộc';
     }
@@ -51,7 +55,7 @@ export default function LoginScreen() {
     return '';
   };
 
-  const validateName = (name) => {
+  const validateName = (name: string) => {
     if (!isLogin && !name.trim()) {
       return 'Tên là bắt buộc';
     }
@@ -87,7 +91,7 @@ export default function LoginScreen() {
       await signInWithGoogle(mockGoogleToken + '.' + mockGoogleToken + '.sig');
       router.replace('/(tabs)');
     } catch (error) {
-      setGeneralError(error.message || 'Đăng nhập Google thất bại');
+      setGeneralError((error as Error).message || 'Đăng nhập Google thất bại');
     } finally {
       setLoading(false);
     }
@@ -111,14 +115,19 @@ export default function LoginScreen() {
 
     try {
       setLoading(true);
-      if (isLogin) {
-        await signIn(email, password);
+      // signIn returns { user, token }, signUp returns loginResponse
+      const res = isLogin
+        ? await signIn(email, password)
+        : await signUp(email, password, displayName);
+      // Check role from response (not from stale state)
+      const role = res?.data?.user?.role;
+      if (role === 'admin') {
+        router.replace('/admin');
       } else {
-        await signUp(email, password, displayName);
+        router.replace('/(tabs)');
       }
-      router.replace('/(tabs)');
     } catch (error) {
-      setGeneralError(error.message || 'Đã xảy ra lỗi. Vui lòng thử lại.');
+      setGeneralError((error as Error).message || 'Đã xảy ra lỗi. Vui lòng thử lại.');
     } finally {
       setLoading(false);
     }
@@ -137,7 +146,10 @@ export default function LoginScreen() {
         >
           {/* Header */}
           <View style={styles.header}>
-            <Text style={styles.logoEmoji}>🍚</Text>
+            <Image
+              style={styles.logoEmoji}
+              source={require('../assets/images/Logo.png')}
+            />
             <Text style={styles.title}>
               {isLogin ? 'Đăng nhập' : 'Tạo tài khoản'}
             </Text>
@@ -219,13 +231,6 @@ export default function LoginScreen() {
                 <Text style={styles.errorText}>{passwordError}</Text>
               ) : null}
             </View>
-
-            {isLogin && (
-              <TouchableOpacity style={styles.forgotPassword}>
-                <Text style={styles.forgotPasswordText}>Quên mật khẩu?</Text>
-              </TouchableOpacity>
-            )}
-
             <TouchableOpacity
               style={[styles.submitButton, loading && styles.submitButtonDisabled]}
               onPress={handleSubmit}
@@ -243,19 +248,6 @@ export default function LoginScreen() {
               <Text style={styles.dividerText}>hoặc</Text>
               <View style={styles.dividerLine} />
             </View>
-
-            {/* Google Button */}
-            <TouchableOpacity
-              style={styles.googleButton}
-              onPress={handleGoogleLogin}
-              disabled={loading}
-              activeOpacity={0.8}
-            >
-              <View style={styles.googleIcon}>
-                <Text style={styles.googleIconText}>G</Text>
-              </View>
-              <Text style={styles.googleButtonText}>Đăng nhập với Google</Text>
-            </TouchableOpacity>
           </View>
 
           {/* Toggle Login/Register */}

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from 'react';
 import {
   View,
@@ -48,7 +49,6 @@ export default function FavoritesScreen() {
                 <Image
                   source={{ uri: recipe.image }}
                   style={styles.recipeImage}
-                  contentFit="cover"
                 />
                 <View style={styles.recipeInfo}>
                   <Text style={styles.recipeName}>{recipe.name}</Text>

@@ -48,14 +48,14 @@ export default function PreferenceScreen() {
   const router = useRouter();
   const { user } = useAuth();
 
-  const [selectedDiet, setSelectedDiet] = useState(null);
-  const [selectedAllergies, setSelectedAllergies] = useState([]);
-  const [selectedTastes, setSelectedTastes] = useState([]);
-  const [selectedTime, setSelectedTime] = useState(null);
+  const [selectedDiet, setSelectedDiet] = useState<string | null>(null);
+  const [selectedAllergies, setSelectedAllergies] = useState<string[]>([]);
+  const [selectedTastes, setSelectedTastes] = useState<string[]>([]);
+  const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(1);
 
-  const toggleAllergy = (id) => {
+  const toggleAllergy = (id: string) => {
     if (selectedAllergies.includes(id)) {
       setSelectedAllergies(selectedAllergies.filter(a => a !== id));
     } else {
@@ -63,7 +63,7 @@ export default function PreferenceScreen() {
     }
   };
 
-  const toggleTaste = (id) => {
+  const toggleTaste = (id: string) => {
     if (selectedTastes.includes(id)) {
       setSelectedTastes(selectedTastes.filter(t => t !== id));
     } else {

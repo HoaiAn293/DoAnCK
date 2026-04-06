@@ -1,32 +1,15 @@
-# Frontend Dockerfile (Expo Web)
-FROM node:20-alpine AS builder
+# Build stage
+FROM node:20-alpine as build-stage
 
 WORKDIR /app
-
-# Copy package files
 COPY package*.json ./
-
-# Install dependencies (including dev)
-RUN npm ci
-
-# Copy source code
+RUN npm install
 COPY . .
-
-# Prebuild to generate native directories
-RUN npx expo prebuild --platform web --clean
-
-# Build web
+# Build expo web
 RUN npx expo export --platform web
 
-# Production stage - serve with nginx
-FROM nginx:alpine
-
-# Copy built files
-COPY --from=builder /app/dist /usr/share/nginx/html
-
-# Copy nginx config
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
+# Production stage
+FROM nginx:stable-alpine as production-stage
+COPY --from=build-stage /app/dist /usr/share/nginx/html
 EXPOSE 80
-
 CMD ["nginx", "-g", "daemon off;"]
