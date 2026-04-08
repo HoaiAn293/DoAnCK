@@ -33,10 +33,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20   # FIX ở đây
+          node-version: 20  
 
       - run: npm install
-      - run: npm run lint || true   # tránh fail vì lint
+      - run: npm run lint || true  
 
   deploy:
     runs-on: ubuntu-latest
