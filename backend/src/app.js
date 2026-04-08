@@ -10,7 +10,7 @@ require('dotenv').config();
 const app = express();
 
 // ========== MIDDLEWARE ==========
-// Security headers
+// Security headersp
 app.use(helmet());
 
 // CORS configuration
@@ -18,8 +18,13 @@ app.use(cors({
   origin: (origin, callback) => {
     // Allow requests with no origin (mobile apps, Postman)
     if (!origin) return callback(null, true);
+    
     // Allow all localhost ports (Expo dev server runs on various ports like 8081)
     if (origin.includes('localhost') || origin.includes('127.0.0.1')) {
+      return callback(null, true);
+    }
+    // Allow Vercel frontend domains
+    if (origin.includes('vercel.app') || origin.includes('expo.io')) {
       return callback(null, true);
     }
     callback(new Error('Not allowed by CORS'));

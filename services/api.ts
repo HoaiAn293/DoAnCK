@@ -5,13 +5,8 @@ const getApiBaseUrl = () => {
   const envUrl = process.env.EXPO_PUBLIC_API_URL;
   if (envUrl) return envUrl;
 
-  if (Platform.OS === 'android') {
-    return 'http://10.0.2.2:5000/api';
-  }
-  if (typeof window !== 'undefined' && window.location?.hostname === 'localhost') {
-    return 'http://localhost:5000/api';
-  }
-  return 'http://172.29.32.1:5000/api';
+  // Fallback: Production backend URL
+  return 'https://barber-api-geas.onrender.com/api';
 };
 
 const api = {
