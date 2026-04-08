@@ -1,6 +1,10 @@
 import { Platform } from 'react-native';
 
 const getApiBaseUrl = () => {
+  // Ưu tiên dùng biến môi trường (cho production Vercel)
+  const envUrl = process.env.EXPO_PUBLIC_API_URL;
+  if (envUrl) return envUrl;
+
   if (Platform.OS === 'android') {
     return 'http://10.0.2.2:5000/api';
   }

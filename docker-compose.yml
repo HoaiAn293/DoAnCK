@@ -29,7 +29,6 @@ services:
 
 volumes:
   mongo-data:
-
 services:
   backend:
     build:

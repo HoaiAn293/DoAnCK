@@ -50,9 +50,10 @@ export default function RecommendationsScreen() {
     setTimeout(async () => {
       try {
         // Gọi API filterByIngredients với keywords theo mood
+        const apiUrl = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:5000/api';
         const keywords = moodKeywords[mood.id] || [];
         if (keywords.length > 0) {
-          const response = await fetch(`http://localhost:5000/api/products/filter`, {
+          const response = await fetch(`${apiUrl}/products/filter`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ ingredients: keywords }),
@@ -62,12 +63,12 @@ export default function RecommendationsScreen() {
             setRecipes(data.data);
           } else {
             // Fallback: lấy all products
-            const allRes = await fetch('http://localhost:5000/api/products?limit=20');
+            const allRes = await fetch(`${apiUrl}/products?limit=20`);
             const allData = await allRes.json();
             setRecipes(allData.data || []);
           }
         } else {
-          const allRes = await fetch('http://localhost:5000/api/products?limit=20');
+          const allRes = await fetch(`${apiUrl}/products?limit=20`);
           const allData = await allRes.json();
           setRecipes(allData.data || []);
         }
